@@ -1,45 +1,96 @@
 import streamlit as st
-st.set_page_config(layout="wide")
-bild = 'data:image/jpeg;base64,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'
+import boto3
+import uuid
+from datetime import datetime
+from boto3.dynamodb.conditions import Key
 
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+table = dynamodb.Table('Databas')
 
-if 'saldo' not in st.session_state:
-    st.session_state.saldo = 0
+def save_entry_to_dynamodb(text):
+    now = datetime.now()
+    week = now.isocalendar()[1]
+    entry = {
+        'id': str(uuid.uuid4()),
+        'week': week,
+        'text': text,
+        'timestamp': now.isoformat()
+    }
+    table.put_item(Item=entry)
 
-st.title("Tågbiljett kalkylator")
-st.header("Här kan du räkna ut hur mycket din tågbiljett kommer kosta")
-st.image(bild,width=250)
+def get_entries_from_dynamodb(week):
+    response = table.query(
+        IndexName='week-index',
+        KeyConditionExpression=Key('week').eq(week)
+    )
+    return response.get('Items', [])
 
-ålder_input = st.text_input("Hur gammal är du?")
+def update_entry_in_dynamodb(entry_id, new_text):
+    now = datetime.now()
+    table.update_item(
+        Key={'id': entry_id},
+        UpdateExpression='SET text = :new_text, timestamp = :new_timestamp',
+        ExpressionAttributeValues={
+            ':new_text': new_text,
+            ':new_timestamp': now.isoformat()
+        }
+    )
 
-if ålder_input:
-    try:
-        ålder = int(ålder_input)
-        if ålder <= 18:
-            st.write("Biljettpriset blir 130kr!")
-            BP = 130
-        elif ålder >= 65:
-            st.write("Biljettpriset blir 100kr!")
-            BP = 100
+def delete_entry_from_dynamodb(entry_id):
+    table.delete_item(Key={'id': entry_id})
+
+current_week = datetime.now().isocalendar()[1]
+
+if 'selected_week' not in st.session_state:
+    st.session_state.selected_week = current_week
+
+if 'edit_mode' not in st.session_state:
+    st.session_state.edit_mode = None
+
+st.title("Igor's Dagbok")
+
+new_entry = st.text_area(" ", placeholder="Skriv ett nytt inlägg här...")
+if st.button("Spara inlägg"):
+    if new_entry.strip():
+        save_entry_to_dynamodb(new_entry.strip())
+        st.success("Inlägg sparat!")
+
+st.header("Visa inlägg för vecka")
+
+col1, col2, col3 = st.columns([1, 2, 1])
+with col1:
+    if st.button("⬅️"):
+        if st.session_state.selected_week > 1:
+            st.session_state.selected_week -= 1
+with col3:
+    if st.button("➡️"):
+        if st.session_state.selected_week < 53:
+            st.session_state.selected_week += 1
+with col2:
+    st.markdown(f"<h2 style='text-align: center;'>Vecka {st.session_state.selected_week}</h2>", unsafe_allow_html=True)
+
+entries = get_entries_from_dynamodb(st.session_state.selected_week)
+
+if entries:
+    st.subheader(f"Inlägg från vecka {st.session_state.selected_week}")
+    for entry in entries:
+        if st.session_state.edit_mode == entry['id']:
+            edited_text = st.text_area(f"Redigera inlägg", entry['text'], key=entry['id'])
+            if st.button(f"Spara ändringar", key=f"save_{entry['id']}"):
+                update_entry_in_dynamodb(entry['id'], edited_text)
+                st.session_state.edit_mode = None
+            if st.button(f"Avbryt", key=f"cancel_{entry['id']}"):
+                st.session_state.edit_mode = None
         else:
-            st.write("Biljettpriset blir 230kr!")
-            BP = 230
-
-        if st.session_state.saldo >= BP:
-            st.session_state.saldo -= BP
-            st.success(f"Du har köpt biljetten!")
-        else:
-            st.error("Du har inte tillräckligt med saldo för att köpa biljetten.")
-
-    except ValueError:
-        st.error("Var god och ange en giltig ålder i siffror.")
+            st.write(f"Inlägg från {entry['timestamp']}")
+            st.write(entry['text'])
+            col4, col5 = st.columns([9, 1])
+            with col5:
+                if st.button("✏️", key=f"edit_{entry['id']}"):
+                    st.session_state.edit_mode = entry['id']
+                if st.button("🗑️", key=f"delete_{entry['id']}"):
+                    delete_entry_from_dynamodb(entry['id'])
+            st.write("---")
 else:
-    st.write("Ange en giltig ålder.")
+    st.info(f"Inga inlägg hittades för vecka {st.session_state.selected_week}.")
 
-st.subheader(f"Ditt aktuella saldo är {st.session_state.saldo}kr")
-
-insättning = st.number_input("Ange det belopp du vill sätta in")
-
-if st.button("Sätt in pengar"):
-    st.session_state.saldo += insättning
-    st.success(f"{insättning}kr har satts in! Ditt nya saldo är {st.session_state.saldo}kr.")
