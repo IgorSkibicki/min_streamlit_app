@@ -4,7 +4,10 @@ import uuid
 from datetime import datetime
 from boto3.dynamodb.conditions import Key
 
-dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+#dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+
+dynamodb = boto3.resource('dynamodb', aws_access_key_id="ASIAUSZJ2IRQZ4QET2TE",
+aws_secret_access_key="XZYLrqc+QgTTONDl13MIpsyQkzoJe/3a/bWZSbPg", region_name='us-east-1')
 table = dynamodb.Table('Databas')
 
 def save_entry_to_dynamodb(text):
@@ -18,12 +21,10 @@ def save_entry_to_dynamodb(text):
     }
     table.put_item(Item=entry)
 
-def get_entries_from_dynamodb(week):
-    response = table.query(
-        IndexName='week-index',
-        KeyConditionExpression=Key('week').eq(week)
-    )
-    return response.get('Items', [])
+def get_entries_by_week(week):
+    response = table.scan(FilterExpression=boto3.dynamodb.conditions.Attr('week').eq(week))
+    return response['Items']
+
 
 def update_entry_in_dynamodb(entry_id, new_text):
     now = datetime.now()
@@ -69,7 +70,7 @@ with col3:
 with col2:
     st.markdown(f"<h2 style='text-align: center;'>Vecka {st.session_state.selected_week}</h2>", unsafe_allow_html=True)
 
-entries = get_entries_from_dynamodb(st.session_state.selected_week)
+entries = get_entries_by_week(st.session_state.selected_week)
 
 if entries:
     st.subheader(f"Inlägg från vecka {st.session_state.selected_week}")
@@ -93,4 +94,3 @@ if entries:
             st.write("---")
 else:
     st.info(f"Inga inlägg hittades för vecka {st.session_state.selected_week}.")
-
