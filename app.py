@@ -4,10 +4,8 @@ import uuid
 from datetime import datetime
 from boto3.dynamodb.conditions import Key
 
-#dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
-dynamodb = boto3.resource('dynamodb', aws_access_key_id="ASIAUSZJ2IRQZ4QET2TE",
-aws_secret_access_key="XZYLrqc+QgTTONDl13MIpsyQkzoJe/3a/bWZSbPg", region_name='us-east-1')
 table = dynamodb.Table('Databas')
 
 def save_entry_to_dynamodb(text):
